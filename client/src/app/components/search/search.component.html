@@ -1,0 +1,31 @@
+
+<div class="container">
+  <div class="row title">
+    <h1>Welcome to MediSearch</h1>
+  </div>
+  <div class="row input">
+    <input class="form-control"
+    placeholder="Enter drug or mechanism name"
+    [(ngModel)]="searchString" #ctrl="ngModel"
+    (change)="isChanged = true">
+    <!-- {{searchString}} -->
+  </div>
+  <div class="row searchResults">
+    <div class = "panel-group col-sm-6" *ngFor="let result of searchResults; let i = index">
+      <div class = "panel panel-default">
+          <div class="panel-heading">
+              <h3>{{i+1}}. {{result.name}}</h3>
+              <p>category: {{result.category}}</p>
+              <p *ngIf="result.category === 'drug'"> {{result.category}} ID: {{result.drugId}}</p>
+              <p *ngIf="result.category === 'mechanism'"> {{result.category}} ID: {{result.mechanismId}}</p>
+          </div>
+          <!-- <div class = "panel-body">
+              <p>Date: {{ user_event.date }}</p>
+              <div class="imgclass" [style.background-image]="'url(' + user_event.img + ')'"></div>
+              <br>
+              <div class="deleteButton"><button (click)="deleteEvent(user_event)">Delete Event</button></div>
+          </div> -->
+      </div>
+    </div>
+  </div>
+</div>
