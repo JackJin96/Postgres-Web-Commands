@@ -1,6 +1,6 @@
 const config = {
     db: {
-        mlabUrl:"mongodb://user:user123@ds047365.mlab.com:47365/medisearch"
+        postgresUrl:"postgres://jmrvyocz:bVEa0rOVigDzvsl6-xyJaUJUHYNql9bS@salt.db.elephantsql.com:5432/jmrvyocz"
     }
 }
 

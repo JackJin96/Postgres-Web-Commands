@@ -4,10 +4,30 @@
     text-align: center;
 }
 
+.input-button{
+    text-align: center;
+}
+
 .input {
     padding: 0 20%;
 }
 
 .searchResults{
-    padding: 5%;
+    text-align: center;
+}
+
+.dropdown-buttons{
+    text-align: center;
+}
+
+.dropdown-menu {
+    left: 50%;
+    right: auto;
+    text-align: center;
+    transform: translate(-50%, 0);
+}
+
+.text-box{
+    text-align: center;
+    margin: 0 20%;
 }

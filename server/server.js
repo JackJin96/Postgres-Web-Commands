@@ -3,12 +3,23 @@ const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 const restRouter = require('./routes/rest');
+// const Client = require('pg');
 
-const config = require('./config');
+// const config = require('./config');
 
 //MongoDB connect
-const mongoose = require('mongoose');
-mongoose.connect(config.db.mlabUrl, { useNewUrlParser: true });
+// const mongoose = require('mongoose');
+// mongoose.connect(config.db.mlabUrl, { useNewUrlParser: true });
+
+// const client = new Client({
+//     connectionString: config.db.postgresUrl,
+// });
+// client.connect();
+// client.query('SELECT * FROM Users limit 1', (err, res) => {
+//     // console.log(err, res);
+//     console.log(res.rows);
+//     client.end();
+// });
 
 const corsOptions = {
     origin: '*',

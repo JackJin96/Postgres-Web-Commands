@@ -1,30 +1,51 @@
 
 <div class="container">
   <div class="row title">
-    <h1>Welcome to MediSearch</h1>
+    <h1>Welcome to PostgreSQL!</h1>
   </div>
-  <div class="row input">
-    <input class="form-control"
-    placeholder="Enter drug or mechanism name"
-    [(ngModel)]="searchString" #ctrl="ngModel"
-    (change)="isChanged = true">
-    <!-- {{searchString}} -->
+  <div class="row text-box">
+      <form class="col-sm-12 form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="SQL Query" name="queryString" ngModel>
+        </div>
+        <button class="btn btn-default">Submit</button>
+      </form>
   </div>
+  <br>
+  <div class="row dropdown-buttons">
+    <p>Note: number of results displayed is being capped to 100 to prevent website from crshing.</p>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Pre-programmed SQL Queries
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a (click)="search(this.commands[0])">Display all users that have at least 1 review</a></li>
+        <li><a (click)="search(this.commands[1])">Display the name of the users that have made 2 reviews or less</a></li>
+        <li><a (click)="search(this.commands[2])">Display all inactive businesses</a></li>
+        <li><a (click)="search(this.commands[3])">
+          Display the names of all pizza restaurants that have a rating of 4 stars or above</a></li>
+        <li><a (click)="search(this.commands[4])">Display the number of stores that had at least one check-in on Friday</a></li>
+        <li><a (click)="search(this.commands[5])">Display the text of all reviews made for the “Arcadia Tavern”</a></li>
+        <li><a (click)="search(this.commands[6])">Display the names of the restaurants that have taken at least one 1-star or 2-star
+            review</a></li>
+        <li><a (click)="search(this.commands[7])">Display the average rating and total number of reviews of all KFC stores</a></li>
+        <li><a (click)="search(this.commands[8])">Display a list of the ids of the top 10 stores in terms of the number of reviews they
+            have received</a></li>
+        <li><a (click)="search(this.commands[9])">Display the name of the user that has made the most reviews</a></li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <br>
   <div class="row searchResults">
-    <div class = "panel-group col-sm-6" *ngFor="let result of searchResults; let i = index">
+    <div class = "panel-group col-sm-12" *ngFor="let result of searchResults; let i = index">
       <div class = "panel panel-default">
           <div class="panel-heading">
-              <h3>{{i+1}}. {{result.name}}</h3>
-              <p>category: {{result.category}}</p>
-              <p *ngIf="result.category === 'drug'"> {{result.category}} ID: {{result.drugId}}</p>
-              <p *ngIf="result.category === 'mechanism'"> {{result.category}} ID: {{result.mechanismId}}</p>
+            <div *ngFor="let item of result | keyvalue">
+                <p>{{item.key}}: {{item.value}}</p>
+            </div>
           </div>
-          <!-- <div class = "panel-body">
-              <p>Date: {{ user_event.date }}</p>
-              <div class="imgclass" [style.background-image]="'url(' + user_event.img + ')'"></div>
-              <br>
-              <div class="deleteButton"><button (click)="deleteEvent(user_event)">Delete Event</button></div>
-          </div> -->
       </div>
     </div>
   </div>
