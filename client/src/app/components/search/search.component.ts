@@ -14,19 +14,7 @@ export class SearchComponent implements OnInit {
 
   constructor(private http:HttpClient) { }
 
-  ngOnInit() {
-    // setInterval(() => {
-    //   if (this.searchString) {
-    //     this.search();
-    //   }
-    // }, 1000);
-    // setInterval(() => {
-    //   if (this.searchString && this.isChanged) {
-    //     this.makeRequest();
-    //     this.isChanged = false;
-    //   }
-    // }, 1000);
-  }
+  ngOnInit() { }
 
   onSubmit(f: NgForm) {
     console.log(f.value.queryString);  // { first: '', last: '' }
@@ -36,6 +24,23 @@ export class SearchComponent implements OnInit {
 
   isChanged = false;
   searchResults = []
+  tableSelection = "Table Selection"
+  actionSelection = "Action Selection"
+  updateDisabled = false;
+
+  changeTableSelection = (s) => {
+    if (s === "Checkins") {
+      this.updateDisabled = true;
+      this.changeActionSelection("Insert");
+    } else {
+      this.updateDisabled = false;
+    }
+    this.tableSelection = s;
+  }
+
+  changeActionSelection = (s) => {
+    this.actionSelection = s;
+  }
 
   commands = [
     "SELECT * FROM Users WHERE Users.review_count >= 1",

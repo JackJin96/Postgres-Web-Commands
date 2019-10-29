@@ -3,6 +3,56 @@
   <div class="row title">
     <h1>Welcome to PostgreSQL!</h1>
   </div>
+  <div class="row notes">
+      <h4>Manually select query to execute:</h4>
+      <br>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 dropdown-buttons">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{ tableSelection }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a (click)="changeTableSelection('Restaurants')">Restaurants</a></li>
+          <li><a (click)="changeTableSelection('Users')">Users</a></li>
+          <li><a (click)="changeTableSelection('Reviews')">Reviews</a></li>
+          <li><a (click)="changeTableSelection('Checkins')">Checkins</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-2 dropdown-buttons">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{ actionSelection }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a (click)="changeActionSelection('Insert')">Insert</a></li>
+          <li><a [class.disabled]="updateDisabled" (click)="changeActionSelection('Update')">Update</a></li>
+          <li><a (click)="changeActionSelection('Delete')">Delete</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-8 dropdown-buttons">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Table
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a>123</a></li>
+          <li><a>234</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row notes">
+      <h4>Manually enter query to execute:</h4>
+      <br>
+  </div>
   <div class="row text-box">
       <form class="col-sm-12 form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
         <div class="form-group">
@@ -12,8 +62,11 @@
       </form>
   </div>
   <br>
+  <div class="row notes">
+      <h4>Pre-programmed SQL Queries</h4>
+      <br>
+  </div>
   <div class="row dropdown-buttons">
-    <p>Note: number of results displayed is being capped to 100 to prevent website from crshing.</p>
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Pre-programmed SQL Queries
@@ -35,6 +88,8 @@
         <li><a (click)="search(this.commands[9])">Display the name of the user that has made the most reviews</a></li>
       </ul>
     </div>
+    <br>
+    <p>(Note: number of results displayed is being capped to 100 to prevent website from crshing.)</p>
   </div>
   <br>
   <br>
