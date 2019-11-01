@@ -6,7 +6,7 @@
   <div class="row notes">
       <h4>Manually select query to execute:</h4>
       <div class="instructions">
-        <div class="panel panel-default">
+        <div class="panel panel-success">
           <div class="panel-heading">
             <h3 class="panel-title">To <b><u><i>INSERT</i></u></b>:</h3>
           </div>
@@ -16,16 +16,35 @@
                 and "Nick 30" in Values field.</p>
           </div>
         </div>
-      <br>
-      <p>To <b><u><i>DELETE</i></u></b>: provide table attributes and primary key.</p>
-      <p>For example, if you are deleting from Users table with SSN = 123456789, then type "SSN" in Attributes field
-          and "123456789" in Values field.</p>
-      <p>To <b><u><i>UPDATE</i></u></b>: provide table attributes and values.</p>
-      <p>For example, if you are updating Users table for user with SSN = 123456789, and you want to update the AGE to 45,
-          then type "SSN AGE" in Attributes field and "123456789 35" in Values field.</p>
-      <br>
+      
+      <div class="instructions2">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title">To <b><u><i>DELETE</i></u></b>:</h3>
+          </div>
+          <div class="panel-body">
+              <p>provide table attributes and primary key.</p>
+              <p>For example, if you are deleting from Users table with SSN = 123456789, then type "SSN" in Attributes field
+                  and "123456789" in Values field.</p>
+          </div>
+        </div>
+      
+      <div class="instructions3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">To <b><u><i>UPDATE</i></u></b>:</h3>
+          </div>
+          <div class="panel-body">
+              <p>provide table attributes and values.</p>
+              <p>For example, if you are updating Users table for user with SSN = 123456789, and you want to update the AGE to 45,
+                  then type "SSN AGE" in Attributes field and "123456789 35" in Values field.</p>
+          </div>
+        </div>
+      
     </div>
   </div>
+  <br>
+
   <div class="row">
     <div class="col-sm-2 dropdown-buttons">
       <div class="dropdown">
