@@ -1,5 +1,5 @@
 # Postgres-Web-Commands
-Web platform for SQL queries to pre-populated postGres database.
+Web platform for SQL queries to pre-populated PostgreSQL database.
 
 ## DB Schema
 ```
