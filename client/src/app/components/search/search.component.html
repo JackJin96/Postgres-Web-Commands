@@ -35,17 +35,15 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-8 dropdown-buttons">
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Table
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a>123</a></li>
-          <li><a>234</a></li>
-        </ul>
-      </div>
+    <div class="col-sm-4">
+      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="SQL Query" name="queryString" ngModel>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-default">Submit</button>
     </div>
   </div>
   <br>
