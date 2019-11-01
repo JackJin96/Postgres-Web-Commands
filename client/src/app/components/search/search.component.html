@@ -6,6 +6,12 @@
   <div class="row notes">
       <h4>Manually select query to execute:</h4>
       <br>
+      <p>If you need to insert something, provide table attributes and values, each separated by a space. </p>
+      <p>For example, if you are insert into Users table with Name = Nick, Age = 30, then type "Name Age" in Attributes field
+        and "Nick 30" in Values field.</p>
+      <p>If you need to delete something, provide table attributes and primary key.</p>
+      <p>If you need to update something, provide table attributes and values.</p>
+      <br>
   </div>
   <div class="row">
     <div class="col-sm-2 dropdown-buttons">
@@ -35,14 +41,21 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="SQL Query" name="queryString" ngModel>
+          <input type="text" class="form-control" placeholder="Attributes" name="queryString" ngModel>
         </div>
       </form>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
+      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Values" name="queryString" ngModel>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-2">
         <button class="btn btn-default">Submit</button>
     </div>
   </div>
