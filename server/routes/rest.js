@@ -14,6 +14,11 @@ router.get('/search',  (req, res) => {
                 .then(data => res.json(data));
 });
 
+router.get('/insert',  (req, res) => {
+    dataService.insert(req)
+                .then(data => res.json(data));
+});
+
 // GET single methods
 // router.get('/drug', (req, res) => {
 //     dataService.getDrug(req)

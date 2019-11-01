@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const postgresClient = require('../postgresClient/postgresClient');
 
 const search = (req) => {
-    searchString = req.query['search_string'];
+    const searchString = req.query['search_string'];
     console.log(searchString);
     return new Promise((resolve, reject) => {
         // postgresClient.client.connect();
@@ -18,6 +18,26 @@ const search = (req) => {
     });
 }
 
+// table name, all attributes
+const insert = (req) => {
+    let insertAttributes = req.query['insert_attributes'];
+    let insertValues = req.query['insert_values'];
+    let insertTable = req.query['insert_table'];
+    let attributes = insertAttributes.split(" ");
+    let values = insertValues.split(" ");
+    return new Promise((resolve, reject) => {
+        // resolve([{ "msg": "INSERT Called" }]);
+        insertString = `SELECT * FROM ${insertTable} WHERE ${attributes[0]} = '${values[0]}'`;
+        console.log(insertString);
+        postgresClient.client.query(insertString, (err, res) => {
+            if (err !== null) {
+                resolve([{"error": err}]);
+            } else {
+                resolve(res.rows);
+            }
+        });
+    });
+}
 
 // ADD functions
 // const addDrug = (reqbody) => {
@@ -114,6 +134,7 @@ module.exports = {
     // getMechanism,
     // getRecord,
     search,
+    insert
     // addDrug,
     // addMechanism,
     // addRecord,
