@@ -19,6 +19,16 @@ router.get('/insert',  (req, res) => {
                 .then(data => res.json(data));
 });
 
+router.get('/delete', (req, res) => {
+    dataService.deleteEntry(req)
+               .then(data => res.json(data));
+})
+
+router.get('/update', (req, res) => {
+    dataService.update(req)
+               .then(data => res.json(data));
+});
+
 // GET single methods
 // router.get('/drug', (req, res) => {
 //     dataService.getDrug(req)

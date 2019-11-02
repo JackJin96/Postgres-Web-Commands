@@ -26,7 +26,21 @@ export class SearchComponent implements OnInit {
     console.log(f);
     console.log(f.value.Attributes);
     console.log(f.value.Values);
-    this.insert(f.value.Attributes, f.value.Values);
+    console.log(this.tableSelection);
+    console.log(this.actionSelection);
+    switch(this.actionSelection) {
+      case 'Insert':
+        this.insert(f.value.Attributes, f.value.Values);
+        break;
+      case 'Delete':
+        this.delete(f.value.Attributes, f.value.Values);
+        break;
+      case 'Update':
+        this.update(f.value.Attributes, f.value.Values);
+        break;
+      default:
+        break;
+    }
   }
 
   isChanged = false;
@@ -97,7 +111,7 @@ export class SearchComponent implements OnInit {
     const insert_params = new HttpParams()
       .set('insert_attributes', insertAttributes)
       .set('insert_values', insertValues)
-      .set('insert_table', 'reviews');
+      .set('insert_table', this.tableSelection);
 
     this.http.get('http://localhost:3000/api/v1/insert', {headers: this.searchHeaders, params: insert_params})
     .subscribe(data => {
@@ -117,30 +131,53 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  // searchDrug = (drugId) => {
-  //   const drug_params = new HttpParams()
-  //     .set('drug_id', drugId);
+  delete = (deleteAttributes, deleteValues) => {
+    this.searchResults = [];
+    const delete_params = new HttpParams()
+      .set('delete_attributes', deleteAttributes)
+      .set('delete_values', deleteValues)
+      .set('delete_table', this.tableSelection);
 
-  //   this.http.get('http://localhost:3000/api/v1/drug', {headers: this.searchHeaders, params: drug_params})
-  //     .subscribe(data => console.log(data));
-  // }
+    this.http.get('http://localhost:3000/api/v1/delete', {headers: this.searchHeaders, params: delete_params})
+    .subscribe(data => {
+      if (data) {
+        this.searchResults = [];
+        for (const key in data) {
+          this.searchResults.push(data[key]);
+          // console.log(data[key]);
+          if (this.searchResults.length > 100) {
+            break;
+          }
+        }
+        console.log(this.searchResults);
+      }
+      console.log(typeof(data));
+      // console.log(data);
+    });
+  }
 
-  // searchMechanism = (mechanismId) => {
-  //   const mechanism_params = new HttpParams()
-  //     .set('mechanism_id', mechanismId);
+  update = (updateAttributes, updateValues) => {
+    this.searchResults = [];
+    const update_params = new HttpParams()
+      .set('update_attributes', updateAttributes)
+      .set('update_values', updateValues)
+      .set('update_table', this.tableSelection);
 
-  //   this.http.get('http://localhost:3000/api/v1/mechanism', {headers: this.searchHeaders, params: mechanism_params})
-  //   .subscribe(data => console.log(data));
-  // }
-
-  // onClick = (category, id) => {
-  //   if (category === "drug") {
-  //     this.searchDrug(id);
-  //   } else if (category === 'mechanism') {
-  //     this.searchMechanism(id);
-  //   } else {
-  //     alert('category does not exist!');
-  //   }
-  // }
-
+    this.http.get('http://localhost:3000/api/v1/update', {headers: this.searchHeaders, params: update_params})
+    .subscribe(data => {
+      if (data) {
+        this.searchResults = [];
+        for (const key in data) {
+          this.searchResults.push(data[key]);
+          // console.log(data[key]);
+          if (this.searchResults.length > 100) {
+            break;
+          }
+        }
+        console.log(this.searchResults);
+      }
+      console.log(typeof(data));
+      // console.log(data);
+    });
+  }
 }

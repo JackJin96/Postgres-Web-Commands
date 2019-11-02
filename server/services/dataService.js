@@ -10,163 +10,111 @@ const search = (req) => {
             if (err !== null) {
                 resolve([{"error": "SQL query syntax error"}]);
             } else {
-                resolve(res.rows);
+                if (res.rows.length > 0) {
+                    resolve(res.rows);
+                } else {
+                    resolve([{"Result": "You search did not match any result in the database."}]);
+                }
             }
-            // console.log(err, res);
         });
-        // postgresClient.client.end();
     });
 }
 
 // table name, all attributes
 const insert = (req) => {
-    let insertAttributes = req.query['insert_attributes'];
-    let insertValues = req.query['insert_values'];
-    let insertTable = req.query['insert_table'];
-    // let attributes = insertAttributes.split(" ");
-    // let values = insertValues.split(" ");
-    // const selectString = `SELECT * FROM ${insertTable} WHERE ${attributes[0]} = '${values[0]}'`;
-    // console.log(selectString);
-    // const insertAttributeString = "";
-    // for (let attribute in insertAttributes) {
-    //     insertValueString +=
-    // }
+    const insertAttributes = req.query['insert_attributes'];
+    const insertValues = req.query['insert_values'];
+    const insertTable = req.query['insert_table'];
     const insertString = `INSERT INTO ${insertTable} (${insertAttributes}) VALUES (${insertValues})`;
     console.log(insertString);
     return new Promise((resolve, reject) => {
+        if (insertAttributes.split(",").length !== insertValues.split(",").length) {
+            resolve([{"error": "You have error in your input, please check the format and the data you entered!"}]);
+        }
         postgresClient.client.query(insertString, (err, res) => {
             if (err !== null) {
-                resolve([{"error": err}]);
+                resolve([{"error": "You have tried to insert an entry that already exists in the table, or your input is not valid!",
+                "error object": err}]);
             } else {
-                resolve(res);
+                resolve([{"success": "You have successfully inserted the entry!", "result object": res}]);
             }
         });
     });
     /*
-insert into reviews (review_id, business_id, user_id, stars, review_date, review_text)
-values ('b', 'b', 'c', 3, '01/01/01', 'love');
+    insert into reviews (review_id, business_id, user_id, stars, review_date, review_text)
+    values ('b', 'b', 'c', 3, '01/01/01', 'love');
     */
 }
 
 // table name, primary key
 const deleteEntry = (req) => {
-    let deleteAttributes = req.query['delete_attributes'];
-    let deleteValues = req.query['delete_values'];
-    let deleteTable = req.query['delete_table'];
-    let attributes = deleteAttributes.split(" ");
-    let values = deleteValues.split(" ");
-    const deleteString = `DELETE FROM ${deleteTable} WHERE ${attributes[0]} = '${values[0]}'`;
+    const deleteAttributes = req.query['delete_attributes'];
+    const deleteValues = req.query['delete_values'];
+    const deleteTable = req.query['delete_table'];
+    const deleteString = `DELETE FROM ${deleteTable} WHERE ${deleteAttributes} = ${deleteValues}`;
     return new Promise((resolve, reject) => {
+        if (deleteAttributes.split(",").length !== deleteValues.split(",").length) {
+            resolve([{"error": "You have error in your input, please check the format and the data you entered!"}]);
+        }
         postgresClient.client.query(deleteString, (err, res) => {
             if (err !== null) {
                 resolve([{"error": err}]);
-            } else if (res.rows.length == 0){
-                resolve([{"error": "The entry you are trying to delete does not exist!"}]);
             } else {
-                resolve(res);
+                console.log(res);
+                if (res.rowCount > 0) {
+                    resolve([{"success": "You have successfully deleted the entry!", "result object": res}]);
+                } else {
+                    resolve([{"warning": "You have tried to delete an entry that does not exist!"}]);
+                }
             }
         });
     });
 }
 
-// ADD functions
-// const addDrug = (reqbody) => {
-//     return new Promise((resolve, reject) => {
-//         DrugModel.findOne({id: reqbody.id}, (err, drugData) => {
-//             if (drugData) {
-//                 resolve({ warning: 'drug already exists!' });
-//             } else {
-//                 const newDrug = new DrugModel({
-//                     id: reqbody.id,
-//                     name: reqbody.name,
-//                     recordId: reqbody.recordId
-//                 });
-//                 newDrug.save();
-//                 resolve(newDrug);
-//             }
-//         });
-//     });
-// }
-
-// const addMechanism = (reqbody) => {
-//     return new Promise((resolve, reject) => {
-//         MechanismModel.findOne({id: reqbody.id}, (err, mechanismData) => {
-//             if (mechanismData) {
-//                 resolve({ warning: 'mechanism already exists!' });
-//             } else {
-//                 const newMechanism = new MechanismModel({
-//                     id: reqbody.id,
-//                     name: reqbody.name,
-//                     associatedDrugs: reqbody.associatedDrugs
-//                 });
-//                 newMechanism.save();
-//                 resolve(newMechanism);
-//             }
-//         });
-//     });
-// }
-
-// const addRecord = (reqbody) => {
-//     return new Promise((resolve, reject) => {
-//         RecordModel.findOne({id: reqbody.id}, (err, recordData) => {
-//             if (recordData) {
-//                 resolve({ warning: 'record already exists!' });
-//             } else {
-//                 const newRecord = new RecordModel({
-//                     id: reqbody.id,
-//                     name: reqbody.name,
-//                     desc: reqbody.desc
-//                 });
-//                 newRecord.save();
-//                 resolve(newRecord);
-//             }
-//         });
-//     });
-// }
-
-// const addCombined = (reqbody) => {
-//     return new Promise((resolve, reject) => {
-//         CombinedModel.findOne({id: reqbody.id}, (err, combinedData) => {
-//             if (combinedData) {
-//                 resolve({ warning: 'record already exists!' });
-//             } else {
-//                 if (reqbody.category === 'drug') {
-//                     const newCombined = new CombinedModel({
-//                         id: reqbody.id,
-//                         name: reqbody.name,
-//                         drugId: reqbody.drugId,
-//                         category: reqbody.category,
-//                         recordId: reqbody.recordId
-//                     });
-//                     newCombined.save();
-//                     resolve(newCombined);
-//                 } else if (reqbody.category === 'mechanism') {
-//                     const newCombined = new CombinedModel({
-//                         id: reqbody.id,
-//                         name: reqbody.name,
-//                         mechanismId: reqbody.mechanismId,
-//                         category: reqbody.category,
-//                         associatedDrugs: reqbody.associatedDrugs
-//                     });
-//                     newCombined.save();
-//                     resolve(newCombined);
-//                 } else {
-//                     resolve({warning: 'category to add is incorrect!'});
-//                 }
-//             }
-//         });
-//     });
-// }
+// table name, primary key, attributes and values
+const update = (req) => {
+    const updateAttributes = req.query['update_attributes'];
+    const updateValues = req.query['update_values'];
+    const updateTable = req.query['update_table'];
+    return new Promise((resolve, reject) => {
+        const splittedAttributes = updateAttributes.split(",");
+        const splittedValues = updateValues.split(",");
+        if (splittedAttributes.length !== splittedValues.length ||
+            splittedAttributes.length === 1 || splittedValues.length === 1) {
+            resolve([{"error": "You have error in your input, please check the format and the data you entered!"}]);
+        }
+        splittedAttributes.forEach((item, index) => {
+            if (item.charAt(0) === " ") {
+                splittedAttributes[index] = item.substring(1);
+            }
+        });
+        splittedValues.forEach((item, index) => {
+            if (item.charAt(0) === " ") {
+                splittedValues[index] = item.substring(1);
+            }
+        });
+        let setString = "";
+        for (let i = 1; i < splittedAttributes.length; i++) {
+            setString += `${splittedAttributes[i]} = ${splittedValues[i]}, `;
+        }
+        setString = setString.substring(0, setString.length - 2);
+        console.log(setString);
+        const updateString = `UPDATE ${updateTable} SET ${setString} WHERE ${splittedAttributes[0]} = ${splittedValues[0]}`;
+        console.log(updateString);
+        postgresClient.client.query(updateString, (err, res) => {
+            if (err !== null) {
+                resolve([{"error": "You have tried to insert an entry that already exists in the table, or your input is not valid!",
+                "error object": err}]);
+            } else {
+                resolve([{"success": "You have successfully inserted the entry!", "result object": res}]);
+            }
+        });
+    });
+}
 
 module.exports = {
-    // getDrugs,
-    // getDrug,
-    // getMechanism,
-    // getRecord,
     search,
-    insert
-    // addDrug,
-    // addMechanism,
-    // addRecord,
-    // addCombined
+    insert,
+    deleteEntry,
+    update
 }
