@@ -54,7 +54,14 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-3">
+    <form class="form-horizontal" #avf="ngForm" (ngSubmit)="submitAandV(avf)" novalidate>
+        <div class="col-sm-6 form-group specialValues">
+          <input type="text" class="form-control" placeholder="Attributes" name="Attributes" ngModel>
+          <input type="text" class="form-control" placeholder="Values" name="Values" ngModel>
+        </div>
+        <button class="col-sm-2 btn btn-default">Submit</button>
+    </form>
+    <!-- <div class="col-sm-3">
       <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Attributes" name="queryString" ngModel>
@@ -70,7 +77,7 @@
     </div>
     <div class="col-sm-2">
         <button class="btn btn-default">Submit</button>
-    </div>
+    </div> -->
   </div>
   <br>
   <div class="row notes">

@@ -22,6 +22,13 @@ export class SearchComponent implements OnInit {
     console.log(f.valid);  // false
   }
 
+  submitAandV(f: NgForm) {
+    console.log(f);
+    console.log(f.value.Attributes);
+    console.log(f.value.Values);
+    this.insert(f.value.Attributes, f.value.Values);
+  }
+
   isChanged = false;
   searchResults = []
   tableSelection = "Table Selection"
@@ -83,6 +90,31 @@ export class SearchComponent implements OnInit {
         console.log(typeof(data));
         // console.log(data);
       });
+  }
+
+  insert = (insertAttributes, insertValues) => {
+    this.searchResults = [];
+    const insert_params = new HttpParams()
+      .set('insert_attributes', insertAttributes)
+      .set('insert_values', insertValues)
+      .set('insert_table', 'reviews');
+
+    this.http.get('http://localhost:3000/api/v1/insert', {headers: this.searchHeaders, params: insert_params})
+    .subscribe(data => {
+      if (data) {
+        this.searchResults = [];
+        for (const key in data) {
+          this.searchResults.push(data[key]);
+          // console.log(data[key]);
+          if (this.searchResults.length > 100) {
+            break;
+          }
+        }
+        console.log(this.searchResults);
+      }
+      console.log(typeof(data));
+      // console.log(data);
+    });
   }
 
   // searchDrug = (drugId) => {

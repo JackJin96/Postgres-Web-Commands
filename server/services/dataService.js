@@ -23,17 +23,47 @@ const insert = (req) => {
     let insertAttributes = req.query['insert_attributes'];
     let insertValues = req.query['insert_values'];
     let insertTable = req.query['insert_table'];
-    let attributes = insertAttributes.split(" ");
-    let values = insertValues.split(" ");
+    // let attributes = insertAttributes.split(" ");
+    // let values = insertValues.split(" ");
+    // const selectString = `SELECT * FROM ${insertTable} WHERE ${attributes[0]} = '${values[0]}'`;
+    // console.log(selectString);
+    // const insertAttributeString = "";
+    // for (let attribute in insertAttributes) {
+    //     insertValueString +=
+    // }
+    const insertString = `INSERT INTO ${insertTable} (${insertAttributes}) VALUES (${insertValues})`;
+    console.log(insertString);
     return new Promise((resolve, reject) => {
-        // resolve([{ "msg": "INSERT Called" }]);
-        insertString = `SELECT * FROM ${insertTable} WHERE ${attributes[0]} = '${values[0]}'`;
-        console.log(insertString);
         postgresClient.client.query(insertString, (err, res) => {
             if (err !== null) {
                 resolve([{"error": err}]);
             } else {
-                resolve(res.rows);
+                resolve(res);
+            }
+        });
+    });
+    /*
+insert into reviews (review_id, business_id, user_id, stars, review_date, review_text)
+values ('b', 'b', 'c', 3, '01/01/01', 'love');
+    */
+}
+
+// table name, primary key
+const deleteEntry = (req) => {
+    let deleteAttributes = req.query['delete_attributes'];
+    let deleteValues = req.query['delete_values'];
+    let deleteTable = req.query['delete_table'];
+    let attributes = deleteAttributes.split(" ");
+    let values = deleteValues.split(" ");
+    const deleteString = `DELETE FROM ${deleteTable} WHERE ${attributes[0]} = '${values[0]}'`;
+    return new Promise((resolve, reject) => {
+        postgresClient.client.query(deleteString, (err, res) => {
+            if (err !== null) {
+                resolve([{"error": err}]);
+            } else if (res.rows.length == 0){
+                resolve([{"error": "The entry you are trying to delete does not exist!"}]);
+            } else {
+                resolve(res);
             }
         });
     });
