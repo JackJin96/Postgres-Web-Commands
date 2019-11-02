@@ -4,99 +4,103 @@
     <h1>Welcome to PostgreSQL!</h1>
   </div>
   <div class="row notes">
-      <h4>Manually select query to execute:</h4>
+      <h4>Manually select query to execute: (Click below to see instructions)</h4>
       <div class="instructions">
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">To <b><u><i>INSERT</i></u></b>:</h3>
-          </div>
-          <div class="panel-body">
-              <p>Provide table attributes and values, each separated by a space. </p>
-              <p>For example, if you are inserting into Users table with NAME = Nick, AGE = 30, then type "NAME AGE" in Attributes field
-                and "Nick 30" in Values field.</p>
-          </div>
-        </div>
-
+          <div class="panel-group">
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1">To <b><u><i>INSERT</i></u></b></a>
+                  </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                  <div class="panel-body">
+                      <p>Provide table attributes and values, each separated by a space. </p>
+                      <p>For example, if you are inserting into Users table with NAME = Nick, AGE = 30, then type "NAME AGE" in Attributes field
+                        and "Nick 30" in Values field.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
       <div class="instructions2">
-        <div class="panel panel-danger">
-          <div class="panel-heading">
-            <h3 class="panel-title">To <b><u><i>DELETE</i></u></b>:</h3>
-          </div>
-          <div class="panel-body">
-              <p>Provide table attributes and primary key.</p>
-              <p>For example, if you are deleting from Users table with SSN = 123456789, then type "SSN" in Attributes field
-                  and "123456789" in Values field.</p>
-          </div>
-        </div>
+          <div class="panel-group">
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse2">To <b><u><i>DELETE</i></u></b></a>
+                  </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                  <div class="panel-body">
+                      <p>Provide table attributes and primary key.</p>
+                      <p>For example, if you are deleting from Users table with SSN = 123456789, then type "SSN" in Attributes field
+                          and "123456789" in Values field.</p>
+                  </div>
+                </div>
+              </div>
+              <br>
 
       <div class="instructions3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">To <b><u><i>UPDATE</i></u></b>:</h3>
-          </div>
-          <div class="panel-body">
-              <p>Provide table attributes and values.</p>
-              <p>For example, if you are updating Users table for user with SSN = 123456789, and you want to update the AGE to 45,
-                  then type "SSN AGE" in Attributes field and "123456789 35" in Values field.</p>
-          </div>
-        </div>
+          <div class="panel-group">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse3">To <b><u><i>UPDATE</i></u></b></a>
+                  </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                  <div class="panel-body">
+                      <p>Provide table attributes and values.</p>
+                      <p>For example, if you are updating Users table for user with SSN = 123456789, and you want to update the AGE to 45,
+                          then type "SSN AGE" in Attributes field and "123456789 35" in Values field.</p>
+                  </div>
+                </div>
 
     </div>
   </div>
   <br>
 
   <div class="row">
-    <div class="col-sm-2 dropdown-buttons">
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          {{ tableSelection }}
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a (click)="changeTableSelection('Restaurants')">Restaurants</a></li>
-          <li><a (click)="changeTableSelection('Users')">Users</a></li>
-          <li><a (click)="changeTableSelection('Reviews')">Reviews</a></li>
-          <li><a (click)="changeTableSelection('Checkins')">Checkins</a></li>
-        </ul>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="col-sm-2 dropdown-buttons">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      {{ tableSelection }}
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a (click)="changeTableSelection('Restaurants')">Restaurants</a></li>
+                      <li><a (click)="changeTableSelection('Users')">Users</a></li>
+                      <li><a (click)="changeTableSelection('Reviews')">Reviews</a></li>
+                      <li><a (click)="changeTableSelection('Checkins')">Checkins</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-2 dropdown-buttons">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      {{ actionSelection }}
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li><a (click)="changeActionSelection('Insert')">Insert</a></li>
+                      <li><a [class.disabled]="updateDisabled" (click)="changeActionSelection('Update')">Update</a></li>
+                      <li><a (click)="changeActionSelection('Delete')">Delete</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <form class="form-horizontal" #avf="ngForm" (ngSubmit)="submitAandV(avf)" novalidate>
+                    <div class="col-sm-6 form-group specialValues">
+                      <input type="text" class="form-control" placeholder="Attributes" name="Attributes" ngModel>
+                      <input type="text" class="form-control" placeholder="Values" name="Values" ngModel>
+                    </div>
+                    <button class="col-sm-2 btn btn-default">Submit</button>
+                </form>
+              </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-2 dropdown-buttons">
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          {{ actionSelection }}
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a (click)="changeActionSelection('Insert')">Insert</a></li>
-          <li><a [class.disabled]="updateDisabled" (click)="changeActionSelection('Update')">Update</a></li>
-          <li><a (click)="changeActionSelection('Delete')">Delete</a></li>
-        </ul>
-      </div>
-    </div>
-    <form class="form-horizontal" #avf="ngForm" (ngSubmit)="submitAandV(avf)" novalidate>
-        <div class="col-sm-6 form-group specialValues">
-          <input type="text" class="form-control" placeholder="Attributes" name="Attributes" ngModel>
-          <input type="text" class="form-control" placeholder="Values" name="Values" ngModel>
-        </div>
-        <button class="col-sm-2 btn btn-default">Submit</button>
-    </form>
-    <!-- <div class="col-sm-3">
-      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Attributes" name="queryString" ngModel>
-        </div>
-      </form>
-    </div>
-    <div class="col-sm-3">
-      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Values" name="queryString" ngModel>
-        </div>
-      </form>
-    </div>
-    <div class="col-sm-2">
-        <button class="btn btn-default">Submit</button>
-    </div> -->
   </div>
   <br>
   <div class="row notes">
@@ -146,11 +150,13 @@
   <div class="row searchResults">
     <div class = "panel-group col-sm-12" *ngFor="let result of searchResults; let i = index">
       <div class = "panel panel-default">
-          <div class="panel-heading">
+        <div class="panel-heading">
+          <div class="panel-body text-left">
             <div *ngFor="let item of result | keyvalue">
-                <p>{{item.key}}: {{item.value}}</p>
+              <p>{{item.key}}: {{item.value}}</p>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
